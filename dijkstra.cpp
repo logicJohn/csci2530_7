@@ -8,6 +8,8 @@
 
 
 #include <cstdio>
+#include event.h
+
 using namespace std;
 
 int traceEnable = 0;
@@ -49,12 +51,18 @@ struct Graph{
 		numE=0
 		arrayV = new Vertex[n+1];
 	}
-}
+};
+
+struct Event{
+	
+	
+};
 
 void readGraph( Graph& g );
 void insertEdge( Graph& g, int a, int b, int c );
 void printGraph( Graph& g );
 void printEdge( Vertex v );
+
 
 int main(int argc, char** argv)
 {
@@ -99,5 +107,16 @@ void printGraph( Graph& g )
 void printEdge( Vertex v )
 {
 	
+	Edge* temp = v.head;
+	while( temp != NULL )
+	{
+		if( temp->u < temp->v || traceEnable )
+		{
+			printf("(%d,%d) weight %d\n",temp->u,temp->v,temp->w);
+		}
+	temp = temp->next;
+	}
+	
 }
+
 
