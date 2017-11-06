@@ -29,7 +29,7 @@ struct Edge{
 
 struct Vertex{
 	Edge* head;
-	int s; //shortest distance to start vertex
+	int time; //shortest distance to start vertex
 	int f; //start?
 	Vertex()
 	{
@@ -54,6 +54,7 @@ struct Graph{
 void readGraph( Graph& g );
 void insertEdge( Graph& g, int a, int b, int c );
 void printGraph( Graph& g );
+void printEdge( Vertex v );
 
 int main(int argc, char** argv)
 {
@@ -64,10 +65,11 @@ void readGraph( Graph& g)
 {
 	int a, b;
 	scanf("%d" , g.numV);
-	for(int i = 1; i >= 1&& g.numV >= 1; i++)
+	for(int i = 1; i >= 1 && g.numV >= 1; i++)
 	{
 		scanf("%d %d %d", a, b, c);
 		insertGraph( g, a, b, c);
+		insertGraph( g, b, a, c);
 	}
 	scanf("%d %d", a, b)
 }
@@ -84,6 +86,17 @@ void insertEdge(g, a, b, c)
 }
 
 void printGraph( Graph& g )
+{
+	
+	printf("There are %d vertices and %d edges. \n", g.numV, g.numE);
+	printf("The edges are as follows. \n\n");
+	for(int i = 1; i < g.numV; i++)
+	{
+		printEdge(g.arrayV);
+	}
+}
+
+void printEdge( Vertex v )
 {
 	
 }
