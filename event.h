@@ -5,7 +5,7 @@
 // Tab stops:  8
 
 #include <cstdio>
-#include pqueue.h
+
 
 #ifndef EVENT_H
 #define EVENT_H
@@ -18,6 +18,6 @@ struct Event{
 	int reciever;
 	double time;
 };
-typedef Event* ItemType;
+//typedef Event* ItemType;
 
 #endif

@@ -8,7 +8,8 @@
 
 
 #include <cstdio>
-#include event.h
+#include "event.h"
+#include "pqueue.h"
 
 using namespace std;
 
@@ -18,8 +19,8 @@ struct Edge{
 	Edge* next;
 	int u; //vertex u
 	int v; //vertex v
-	int w; //weight w
-	Edge( Edge* n, int a, int b, int c)
+	double w; //weight w
+	Edge( Edge* n, int a, int b, double c)
 	{
 		//note roads are 1 way, u=a & v=b != u=b & v=a
 		next=n;
@@ -31,13 +32,13 @@ struct Edge{
 
 struct Vertex{
 	Edge* head;
-	int time; //shortest distance to start vertex
+	int t; //shortest time/distance to start vertex
 	int f; //start?
 	Vertex()
 	{
 		head = NULL;
-		s = -1
-		f = -1
+		t = -1;
+		f = -1;
 	}
 };
 
@@ -48,46 +49,55 @@ struct Graph{
 	Graph(int n)
 	{
 		numV=n;
-		numE=0
-		arrayV = new Vertex[n+1];
+		numE=0;
 	}
 };
 
-struct Event{
-	
-	
-};
 
 void readGraph( Graph& g );
-void insertEdge( Graph& g, int a, int b, int c );
+void insertEdge( Edge* v, int a, int b, double c );
 void printGraph( Graph& g );
-void printEdge( Vertex v );
+void printEdge( Vertex* v );
 
 
 int main(int argc, char** argv)
 {
-  return 0;
+	
+	Graph g(0);
+	readGraph(g);
+	printf("print graph\n");
+	printGraph(g);
+	
+	return 0;
 }
 
 void readGraph( Graph& g)
 {
-	int a, b;
-	scanf("%d" , g.numV);
-	for(int i = 1; i >= 1 && g.numV >= 1; i++)
+	int a, b, c;
+	scanf("%i" , &g.numV);
+	g.arrayV = new Vertex[g.numV+1];
+	for(int i = 0; i <= g.numV; i++)
 	{
-		scanf("%d %d %d", a, b, c);
-		insertGraph( g, a, b, c);
-		insertGraph( g, b, a, c);
+		g.arrayV[i].head = NULL;
 	}
-	scanf("%d %d", a, b)
+	printf("insert Edge\n");
+	for(int i = 1; i <= g.numV && g.numV >= 1; i++)
+	{
+		
+		scanf("%i %i %d", &a, &b, &c);
+		insertEdge( g.arrayV[i].head, a, b, c);
+		g.numE++;
+	}
+	scanf("%d %d", &a, &b);
 }
 
-void insertEdge(g, a, b, c)
+void insertEdge( Edge* v, int a, int b, double c )
 {
-	Edge* temp = new edge(NULL, a, b, c);
-	Edge* counter = g.arrayV[a].head;
+	Edge* temp = new Edge(NULL, a, b, c);
+	Edge* counter = NULL;
 	while(counter->next != NULL)
 	{
+		printf("4\n");
 		counter = counter->next;
 	}
 	counter->next= temp;
@@ -104,10 +114,10 @@ void printGraph( Graph& g )
 	}
 }
 
-void printEdge( Vertex v )
+void printEdge( Vertex* v )
 {
 	
-	Edge* temp = v.head;
+	Edge* temp = v->head;
 	while( temp != NULL )
 	{
 		if( temp->u < temp->v || traceEnable )
