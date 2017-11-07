@@ -19,8 +19,8 @@ struct Edge{
 	Edge* next;
 	int u; //vertex u
 	int v; //vertex v
-	double w; //weight w
-	Edge( Edge* n, int a, int b, double c)
+	int w; //weight w
+	Edge( Edge* n, int a, int b, int c)
 	{
 		//note roads are 1 way, u=a & v=b != u=b & v=a
 		next=n;
@@ -50,74 +50,88 @@ struct Graph{
 	{
 		numV=n;
 		numE=0;
+		arrayV = new Vertex[n+1];
+		for(int i = 0; i <= n ; i++)
+		{
+			arrayV[i].head = NULL;
+		}
 	}
 };
 
 
-void readGraph( Graph& g );
-void insertEdge( Edge* v, int a, int b, double c );
-void printGraph( Graph& g );
-void printEdge( Vertex* v );
+Graph readGraph();
+void insertEdge(Graph& v, int a, int b, double c );
+void printGraph(Graph& g );
+void printEdge(Edge* v );
 
 
 int main(int argc, char** argv)
 {
 	
+	
 	Graph g(0);
-	readGraph(g);
-	printf("print graph\n");
+	g = readGraph();
 	printGraph(g);
 	
 	return 0;
 }
 
-void readGraph( Graph& g)
+Graph readGraph()
 {
 	int a, b, c;
-	scanf("%i" , &g.numV);
-	g.arrayV = new Vertex[g.numV+1];
-	for(int i = 0; i <= g.numV; i++)
-	{
-		g.arrayV[i].head = NULL;
-	}
-	printf("insert Edge\n");
-	for(int i = 1; i <= g.numV && g.numV >= 1; i++)
+	scanf("%i" , &a);
+	Graph temp(a);
+	while( a > 0 )
 	{
 		
-		scanf("%i %i %d", &a, &b, &c);
-		insertEdge( g.arrayV[i].head, a, b, c);
-		g.numE++;
+		scanf(" %i %i %i ", &a, &b, &c );
+		if(a>0)
+		{	
+			insertEdge( temp , a, b, c );
+			insertEdge( temp , b, a, c );
+			temp.numE++;
+		}
+		else {
+			//store the other two numbers somewhere in here
+			//at thise point you havent read the assigment
+			//and dont know what to do
+			
+		}
 	}
-	scanf("%d %d", &a, &b);
+	return temp;
 }
 
-void insertEdge( Edge* v, int a, int b, double c )
+void insertEdge( Graph& g, int a, int b, double c )
 {
-	Edge* temp = new Edge(NULL, a, b, c);
-	Edge* counter = NULL;
-	while(counter->next != NULL)
+	if(g.arrayV[a].head == NULL)
 	{
-		printf("4\n");
-		counter = counter->next;
+		g.arrayV[a].head = new Edge(NULL,a,b,c);
 	}
-	counter->next= temp;
+	else
+	{
+		Edge* temp = g.arrayV[a].head;
+		while(temp->next != NULL)
+		{
+			temp = temp->next;
+		}
+		temp->next = new Edge(NULL, a, b, c);
+	}
 }
 
 void printGraph( Graph& g )
 {
-	
 	printf("There are %d vertices and %d edges. \n", g.numV, g.numE);
 	printf("The edges are as follows. \n\n");
-	for(int i = 1; i < g.numV; i++)
+	for(int i = 1; i <= g.numV; i++)
 	{
-		printEdge(g.arrayV);
+		printEdge(g.arrayV[i].head);
 	}
 }
 
-void printEdge( Vertex* v )
+void printEdge( Edge* v )
 {
 	
-	Edge* temp = v->head;
+	Edge* temp = v;
 	while( temp != NULL )
 	{
 		if( temp->u < temp->v || traceEnable )
