@@ -65,8 +65,20 @@ void printGraph(Graph& g );
 void printEdge(Edge* v );
 
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
+	if( argc > 1 )
+	{
+		if(argv[1] == "t")
+		{
+			traceEnable = 1;
+		}
+		else
+		{
+			printf("\n usage: dijkstra [-t] \n");
+			return 1;
+		}
+	}
 	
 	
 	Graph g(0);

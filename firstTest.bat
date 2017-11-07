@@ -14,7 +14,7 @@ echo 2 5 20
 echo 3 5 15
 echo 0
 echo 1 2
-) | T:\github\csci2530_7\test.exe
+) | T:\github\csci2530_7\test.exe 
 
 
 pause
