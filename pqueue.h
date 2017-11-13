@@ -36,7 +36,7 @@ regards to ItemType
 //defines the data type of ItemType and PriorityType
 //To adjust the data types change them here and pqueue.h
 // and pqueue.cpp will all follow
-typedef const char* ItemType;
+typedef Event* ItemType;
 typedef double PriorityType;
 
 typedef void (*ItemPrinter)(ItemType);

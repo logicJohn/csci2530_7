@@ -14,9 +14,18 @@
 
 
 struct Event{
+	Event* next;
 	int sender;
 	int reciever;
 	double time;
+	Event(int u, int v, int t)
+	{
+		next = NULL;
+		sender = u;
+		reciever = v;
+		time = t;
+		
+	}	
 };
 //typedef Event* ItemType;
 

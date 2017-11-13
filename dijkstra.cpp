@@ -63,6 +63,10 @@ Graph readGraph();
 void insertEdge(Graph& v, int a, int b, double c );
 void printGraph(Graph& g );
 void printEdge(Edge* v );
+void sendSignal (int u, int v, int t, Event* q);
+void propergateSignal( Graph& g, int v, Event* q);
+void findDijkstra( Graph& g);
+
 
 
 int main(int argc, char* argv[])
@@ -85,8 +89,13 @@ int main(int argc, char* argv[])
 	g = readGraph();
 	printGraph(g);
 	
+	
+	Event* eventQueue = NULL;
+	
+	
 	return 0;
 }
+
 
 Graph readGraph()
 {
@@ -155,4 +164,33 @@ void printEdge( Edge* v )
 	
 }
 
+
+
+void sendSignal (int u, int v, int t, Event* q)
+{
+	Event* temp = new Event( u, v, t);
+	Event* counter = q;
+	while ( counter -> next != NULL )
+	{
+		counter = counter -> next;
+	}
+	counter -> next = temp;
+	
+}
+
+//draw this out
+void propergateSignal( Graph& g, int v, Event* q)
+{
+	Edge* temp = g.arrayV[v];
+	while( temp != NULL )
+	{
+		temp = temp -> next;
+	}
+}
+
+
+void findDijkstra( Graph& g)
+{
+	
+}
 

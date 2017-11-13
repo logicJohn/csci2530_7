@@ -12,6 +12,7 @@ While also defining
 
 #include <cstdio>
 #include "pqueue.h"
+#include "event.h"
 using namespace std;
 
 /*
