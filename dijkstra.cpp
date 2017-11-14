@@ -59,14 +59,19 @@ struct Graph{
 	}
 };
 
+struct goal{
+	int start;
+	int finish;
+};
+
 
 Graph readGraph();
 void insertEdge(Graph& v, int a, int b, double c );
 void printGraph(Graph& g );
 void printEdge(Edge* v );
-void sendSignal (int u, int v, int t, Event* q);
-void propergateSignal( Graph& g, int x, Event* q);
-void findDijkstra( Graph& g);
+void sendSignal (int u, int v, int t, PriorityQueue q);
+void propergateSignal( Graph& g, int x, PriorityQueue q);
+void findDijkstra( Graph& g, int x, int y);
 
 
 
@@ -169,31 +174,53 @@ void printEdge( Edge* v )
 
 void sendSignal (int u, int v, int t, PriorityQueue q)
 {
-	Event temp(u, v, t); 
+	ItemType temp = new Event(u, v, t); 
 	insert( q, temp, t );
-	
+	delete temp;
 }
 
 //draw this out
-void propergateSignal( Graph& g, int x, Event* q)
+void propergateSignal( Graph& g, int x, PriorityQueue q)
 {
-	Edge* temp = g.arrayV[x];
+	Edge* temp = g.arrayV[x].head;
 	while( temp != NULL )
 	{
-		sendSignal( temp->u, temp->v, temp->w, q);
+		if( g.arrayV[temp->v].t == -1 )
+		{
+			sendSignal( temp->v, temp->u, g.arrayV[x].t+temp->w, q);
+		}
 		temp = temp -> next;
 	}
 }
 
-void processEvent( Graph& g, PriorityQueue q, Event x)
+void processEvent( Graph& g, PriorityQueue q, Event e )
 {
+	
+	if( g.arrayV[e.reciever].t < 0  )
+	{
+		
+		g.arrayV[e.reciever].t = e.times;
+		g.arrayV[e.reciever].f = e.sender;
+		ItemType temp = &e;
+		insert( q, temp, e.times + g.arrayV[e.sender].t);
+		
+	}
+	
 	
 	
 }
 
 
-void findDijkstra( Graph& g)
+void findDijkstra( Graph& g, int x, int y)
 {
+	
+	PriorityQueue q;
+	sendSignal( x, v, 0, q )
+	
+	while( g.arrayV[y] == -1 )
+	{
+		remove 
+	}
 	
 }
 
