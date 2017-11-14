@@ -15,6 +15,7 @@ using namespace std;
 
 int traceEnable = 0;
 
+//Currently the weight is a double fix this
 struct Edge{
 	Edge* next;
 	int u; //vertex u
@@ -32,8 +33,8 @@ struct Edge{
 
 struct Vertex{
 	Edge* head;
-	int t; //shortest time/distance to start vertex
-	int f; //start?
+	int t; //time
+	int f; //from
 	Vertex()
 	{
 		head = NULL;
@@ -64,7 +65,7 @@ void insertEdge(Graph& v, int a, int b, double c );
 void printGraph(Graph& g );
 void printEdge(Edge* v );
 void sendSignal (int u, int v, int t, Event* q);
-void propergateSignal( Graph& g, int v, Event* q);
+void propergateSignal( Graph& g, int x, Event* q);
 void findDijkstra( Graph& g);
 
 
@@ -90,7 +91,7 @@ int main(int argc, char* argv[])
 	printGraph(g);
 	
 	
-	Event* eventQueue = NULL;
+	PriorityQueue eventQueue();
 	
 	
 	return 0;
@@ -166,26 +167,28 @@ void printEdge( Edge* v )
 
 
 
-void sendSignal (int u, int v, int t, Event* q)
+void sendSignal (int u, int v, int t, PriorityQueue q)
 {
-	Event* temp = new Event( u, v, t);
-	Event* counter = q;
-	while ( counter -> next != NULL )
-	{
-		counter = counter -> next;
-	}
-	counter -> next = temp;
+	Event temp(u, v, t);
+	insert( q, temp, t );
 	
 }
 
 //draw this out
-void propergateSignal( Graph& g, int v, Event* q)
+void propergateSignal( Graph& g, int x, Event* q)
 {
-	Edge* temp = g.arrayV[v];
+	Edge* temp = g.arrayV[x];
 	while( temp != NULL )
 	{
+		sendSignal( temp->u, temp->v, temp->w, q);
 		temp = temp -> next;
 	}
+}
+
+void processEvent( Graph& g, PriorityQueue q, Event x)
+{
+	
+	
 }
 
 
