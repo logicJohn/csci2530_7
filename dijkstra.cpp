@@ -169,7 +169,7 @@ void printEdge( Edge* v )
 
 void sendSignal (int u, int v, int t, PriorityQueue q)
 {
-	Event temp(u, v, t);
+	Event temp(u, v, t); 
 	insert( q, temp, t );
 	
 }
