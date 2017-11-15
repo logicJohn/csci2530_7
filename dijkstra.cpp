@@ -59,20 +59,26 @@ struct Graph{
 	}
 };
 
-struct goal{
+struct Goal{
 	int start;
 	int finish;
+	Goal(int a, int b)
+	{
+		start = a;
+		finish = b;
+	}
 };
 
 
-Graph readGraph();
+Graph readGraph(Goal* d);
 void insertEdge(Graph& v, int a, int b, double c );
 void printGraph(Graph& g );
 void printEdge(Edge* v );
 void sendSignal (int u, int v, int t, PriorityQueue q);
 void propergateSignal( Graph& g, int x, PriorityQueue q);
 void findDijkstra( Graph& g, int x, int y);
-
+void deletePriorityQueue(PriorityQueue q);
+void showPath();
 
 
 int main(int argc, char* argv[])
@@ -92,25 +98,24 @@ int main(int argc, char* argv[])
 	
 	
 	Graph g(0);
-	g = readGraph();
+	Goal* d;
+	g = readGraph(d);
 	printGraph(g);
 	
 	
-	PriorityQueue eventQueue();
 	
-	
+	delete d;	
 	return 0;
 }
 
 
-Graph readGraph()
+Graph readGraph(Goal* d)
 {
 	int a, b, c;
 	scanf("%i" , &a);
 	Graph temp(a);
 	while( a > 0 )
 	{
-		
 		scanf(" %i %i %i ", &a, &b, &c );
 		if(a>0)
 		{	
@@ -119,10 +124,7 @@ Graph readGraph()
 			temp.numE++;
 		}
 		else {
-			//store the other two numbers somewhere in here
-			//at thise point you havent read the assigment
-			//and dont know what to do
-			
+			d = new Goal(b,c);
 		}
 	}
 	return temp;
@@ -157,7 +159,6 @@ void printGraph( Graph& g )
 
 void printEdge( Edge* v )
 {
-	
 	Edge* temp = v;
 	while( temp != NULL )
 	{
@@ -167,7 +168,6 @@ void printEdge( Edge* v )
 		}
 	temp = temp->next;
 	}
-	
 }
 
 
@@ -193,9 +193,9 @@ void propergateSignal( Graph& g, int x, PriorityQueue q)
 	}
 }
 
+
 void processEvent( Graph& g, PriorityQueue q, Event e )
 {
-	
 	if( g.arrayV[e.reciever].t < 0  )
 	{
 		
@@ -205,22 +205,36 @@ void processEvent( Graph& g, PriorityQueue q, Event e )
 		insert( q, temp, e.times + g.arrayV[e.sender].t);
 		
 	}
-	
-	
-	
 }
 
 
-void findDijkstra( Graph& g, int x, int y)
+void findDijkstra( Graph& g, Goal* d)
 {
-	
 	PriorityQueue q;
-	sendSignal( x, v, 0, q )
+	sendSignal( d->start, 0, 0, q );
+	ItemType it;
+	PriorityType pt;
 	
-	while( g.arrayV[y] == -1 )
+	while( g.arrayV[d->finish].t == -1 )
 	{
-		remove 
+		remove(q, it, pt); 
+		processEvent( g, q, *it);
 	}
+	deletePriorityQueue(q);
+}
+
+void deletePriorityQueue(PriorityQueue q)
+{
+	ItemType it;
+	PriorityType pt;
+	while( !isEmpty(q) )
+	{
+		remove( q, it, pt);
+	}
+}
+
+void showPath()
+{
 	
 }
 
