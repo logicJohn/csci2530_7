@@ -170,8 +170,6 @@ void printEdge( Edge* v )
 	}
 }
 
-
-
 void sendSignal (int u, int v, int t, PriorityQueue q)
 {
 	ItemType temp = new Event(u, v, t); 
@@ -193,7 +191,6 @@ void propergateSignal( Graph& g, int x, PriorityQueue q)
 	}
 }
 
-
 void processEvent( Graph& g, PriorityQueue q, Event e )
 {
 	if( g.arrayV[e.reciever].t < 0  )
@@ -206,7 +203,6 @@ void processEvent( Graph& g, PriorityQueue q, Event e )
 		
 	}
 }
-
 
 void findDijkstra( Graph& g, Goal* d)
 {
