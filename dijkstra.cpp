@@ -151,8 +151,8 @@ int main(int argc, char* argv[])
 	Graph g(0);
 	g = readGraph();
 	int start, finish;
-	scanf(" %d , %d ", start, finish);
-	printf("%d \n", finish);
+	scanf("%i %i", &start, &finish);
+	printf("%i \n", finish);
 	printGraph(g);	
 	findDijkstra( g, start, finish);
 	showPath(g, finish);
@@ -161,26 +161,20 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-
 Graph readGraph()
 {
 	int a, b;
-	double 	c;
+	double c;
 	scanf("%i" , &a);
 	Graph temp(a);
-	printf("WHY%d", a);
+	scanf("%i ", &a );
 	while( a > 0 )
 	{
-		printf("WHY NOOOOOOO%a"a);
-		scanf(" %d" , &a );
-		if(a !=0 )
-		{	
-			scanf(" %d %d ",  &b, &c );
-			insertEdge( temp , a, b, c );
-			insertEdge( temp , b, a, c );
-			temp.numE++;
-		}
-		
+		scanf("%i %lf ", &b, &c );
+		insertEdge( temp , a, b, c );
+		insertEdge( temp , b, a, c );
+		temp.numE++;
+		scanf("%i", &a);
 	}
 	return temp;
 }
@@ -253,6 +247,7 @@ void propergateSignal( Graph& g, int x, PriorityQueue& q)
 
 void processEvent( Graph& g, PriorityQueue& q, Event e )
 {
+	
 	if( g.arrayV[e.reciever].t < 0  )
 	{
 		
