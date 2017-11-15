@@ -4,24 +4,34 @@
 // File:       dijkstra.cpp
 // Tab stops:  8
 
-// **Say what this program does here.  (replace this comment)**
+/*
+This program takes reads a weighted graph from the user as 
+well as a start and finish point on the weighted graph 
 
+Definitions:
+A graph is a set of vertices contected by edges.
+*/
 
 #include <cstdio>
+#include <cstring>
 #include "event.h"
 #include "pqueue.h"
+
 
 using namespace std;
 
 int traceEnable = 0;
 
-//Currently the weight is a double fix this
+/*
+
+
+*/
 struct Edge{
 	Edge* next;
 	int u; //vertex u
 	int v; //vertex v
-	int w; //weight w
-	Edge( Edge* n, int a, int b, int c)
+	double w; //weight w
+	Edge( Edge* n, int a, int b, double c)
 	{
 		//note roads are 1 way, u=a & v=b != u=b & v=a
 		next=n;
@@ -31,6 +41,10 @@ struct Edge{
 	}
 };
 
+/*
+
+
+*/
 struct Vertex{
 	Edge* head;
 	int t; //time
@@ -43,6 +57,10 @@ struct Vertex{
 	}
 };
 
+/*
+
+
+*/
 struct Graph{
 	int numV; //num of Verticies
 	int numE; //num of Edges
@@ -57,30 +75,65 @@ struct Graph{
 			arrayV[i].head = NULL;
 		}
 	}
-};
-
-struct Goal{
-	int start;
-	int finish;
-	Goal(int a, int b)
-	{
-		start = a;
-		finish = b;
-	}
+	
 };
 
 
-Graph readGraph(Goal* d);
+/*
+
+
+*/
+Graph readGraph();
+
+/*
+
+
+*/
 void insertEdge(Graph& v, int a, int b, double c );
+
+/*
+
+
+*/
 void printGraph(Graph& g );
+
+/*
+
+
+*/
 void printEdge(Edge* v );
-void sendSignal (int u, int v, int t, PriorityQueue q);
-void propergateSignal( Graph& g, int x, PriorityQueue q);
+
+/*
+
+
+*/
+void sendSignal (int u, int v, int t, PriorityQueue& q);
+
+/*
+
+
+*/
+void propergateSignal( Graph& g, int x, PriorityQueue& q);
+
+/*
+
+
+*/
 void findDijkstra( Graph& g, int x, int y);
-void deletePriorityQueue(PriorityQueue q);
-void showPath();
+
+/*
 
 
+*/
+void deletePriorityQueue(PriorityQueue& q);
+
+/*
+
+
+*/
+void showPath(Graph g, int d);
+
+//main function, option -t enables trace
 int main(int argc, char* argv[])
 {
 	if( argc > 1 )
@@ -95,37 +148,39 @@ int main(int argc, char* argv[])
 			return 1;
 		}
 	}
-	
-	
 	Graph g(0);
-	Goal* d;
-	g = readGraph(d);
-	printGraph(g);
-	
-	
-	
-	delete d;	
+	g = readGraph();
+	int start, finish;
+	scanf(" %d , %d ", start, finish);
+	printf("%d \n", finish);
+	printGraph(g);	
+	findDijkstra( g, start, finish);
+	showPath(g, finish);
+
+		
 	return 0;
 }
 
 
-Graph readGraph(Goal* d)
+Graph readGraph()
 {
-	int a, b, c;
+	int a, b;
+	double 	c;
 	scanf("%i" , &a);
 	Graph temp(a);
+	printf("WHY%d", a);
 	while( a > 0 )
 	{
-		scanf(" %i %i %i ", &a, &b, &c );
-		if(a>0)
+		printf("WHY NOOOOOOO%a"a);
+		scanf(" %d" , &a );
+		if(a !=0 )
 		{	
+			scanf(" %d %d ",  &b, &c );
 			insertEdge( temp , a, b, c );
 			insertEdge( temp , b, a, c );
 			temp.numE++;
 		}
-		else {
-			d = new Goal(b,c);
-		}
+		
 	}
 	return temp;
 }
@@ -170,15 +225,20 @@ void printEdge( Edge* v )
 	}
 }
 
-void sendSignal (int u, int v, int t, PriorityQueue q)
+void sendSignal (int u, int v, int t, PriorityQueue& q)
 {
 	ItemType temp = new Event(u, v, t); 
 	insert( q, temp, t );
 	delete temp;
+	
+	if (traceEnable == 1)
+	{
+		printf( "t, u, v");
+	}
 }
 
 //draw this out
-void propergateSignal( Graph& g, int x, PriorityQueue q)
+void propergateSignal( Graph& g, int x, PriorityQueue& q)
 {
 	Edge* temp = g.arrayV[x].head;
 	while( temp != NULL )
@@ -191,46 +251,65 @@ void propergateSignal( Graph& g, int x, PriorityQueue q)
 	}
 }
 
-void processEvent( Graph& g, PriorityQueue q, Event e )
+void processEvent( Graph& g, PriorityQueue& q, Event e )
 {
 	if( g.arrayV[e.reciever].t < 0  )
 	{
 		
 		g.arrayV[e.reciever].t = e.times;
 		g.arrayV[e.reciever].f = e.sender;
-		ItemType temp = &e;
-		insert( q, temp, e.times + g.arrayV[e.sender].t);
+		//ItemType temp = &e;
+		//insert( q, temp, e.times + g.arrayV[e.sender].t);
+		
+		propergateSignal( g, e.reciever , q);
+		if(traceEnable == 1)
+		{
+			printf( "event porccessed" );
+			printf( "the new vetwex is" );
+		}
 		
 	}
 }
 
-void findDijkstra( Graph& g, Goal* d)
+void findDijkstra( Graph& g, int start, int finish)
 {
 	PriorityQueue q;
-	sendSignal( d->start, 0, 0, q );
+	sendSignal( start, 0, 0, q );
 	ItemType it;
 	PriorityType pt;
-	
-	while( g.arrayV[d->finish].t == -1 )
+	printf("you are here 1 \n");
+	printf(" finish %d " , finish);
+	while( g.arrayV[finish].f == -1 )
 	{
+		printf("you are here 2 \n");
 		remove(q, it, pt); 
 		processEvent( g, q, *it);
 	}
+	printf("you are here 3 \n");
 	deletePriorityQueue(q);
 }
 
-void deletePriorityQueue(PriorityQueue q)
+void deletePriorityQueue(PriorityQueue& q)
 {
 	ItemType it;
 	PriorityType pt;
 	while( !isEmpty(q) )
 	{
-		remove( q, it, pt);
+		remove( q, it, pt);		
 	}
 }
 
-void showPath()
+void showPath(Graph g, int d)
 {
-	
+	int temp = g.arrayV[d].f;
+	if( temp == 0 )
+	{
+		printf(" %d", d );
+	}
+	else
+	{
+		showPath( g, temp );
+		printf(" -----> %d ", temp );
+	}
 }
 
