@@ -14,7 +14,7 @@
 An event is the signal that will be sent
 from vertex to vertex as going through
 a path.  The sender will be where the vertex
-comes from and the receiver will be where the 
+comes from and the receiver will be where the
 vertex is headed.  Times will the weight off_type
 each origin.
 Next will go to the event follwoing this one in the
@@ -32,8 +32,7 @@ struct Event{
 		sender = u;
 		receiver = v;
 		times = t;
-		
-	}	
+	}
 };
 //typedef Event* ItemType;
 
