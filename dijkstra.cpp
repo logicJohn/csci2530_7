@@ -28,7 +28,7 @@ A Path is a set of instructions used to navigate from
 
 using namespace std;
 
-int traceEnable = 1;
+int traceEnable = 0;
 
 /*
 This edge contains the two integers that it connects
@@ -158,7 +158,7 @@ int main(int argc, char* argv[])
 	if( argc > 1 )
 	{
 		
-		if( strcmp( argv[1], "-t") == 0 )
+		if( strcmp(argv[1], "-t") == 0 )
 		{
 			
 			traceEnable = 1;

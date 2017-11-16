@@ -16,7 +16,7 @@ echo 3 5 155
 echo 0
 
 echo 1 4
-) | T:\github\test\csci2530_7\helloWorld
+) | T:\github\test\csci2530_7\helloWorld -t
 
 
 pause
