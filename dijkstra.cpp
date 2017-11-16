@@ -157,10 +157,8 @@ int main(int argc, char* argv[])
 {
 	if( argc > 1 )
 	{
-		
 		if( strcmp(argv[1], "-t") == 0 )
 		{
-			
 			traceEnable = 1;
 		}
 		else
@@ -169,7 +167,7 @@ int main(int argc, char* argv[])
 			return 1;
 		}
 	}
-	
+
 	Graph g(-1);
 	g = readGraph();
 	int start, finish;
@@ -319,7 +317,8 @@ void findDijkstra( Graph& g, int start, int finish)
 	while( g.arrayV[finish].f == -1 )
 	{
 		remove(q, it, pt);
-		processEvent( g, q, *it);
+		Event event = *it;
+		processEvent( g, q, event);
 	}
 	deletePriorityQueue(q);
 }
