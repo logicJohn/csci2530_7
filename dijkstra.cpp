@@ -251,8 +251,8 @@ void sendSignal (int u, int v, double t, PriorityQueue& q)
 	if (traceEnable == 1)
 	{
 		printf( "Signal Sent \n");
-		printf( "Arrival %d, Sender %d, Receiver %d \n", temp->times, temp->sender, temp->receiver);
-		printf( "Arrival %d, Sender %d, Receiver %d \n", t, u, v);
+		printf( "Arrival %.2lf, Sender %d, Receiver %d \n", temp->times, temp->sender, temp->receiver);
+		printf( "Arrival %.2lf, Sender %d, Receiver %d \n", t, u, v);
 	}
 	delete temp;
 }
@@ -294,7 +294,7 @@ void processEvent( Graph& g, PriorityQueue& q, Event e )
 		if(traceEnable == 1)
 		{
 			printf( "Event Processed \n" );
-			printf( "Arrival %d, sender %d, receiver %d \n", e.times, e.sender, e.receiver );
+			printf( "Arrival %.2lf, sender %d, receiver %d \n", e.times, e.sender, e.receiver );
 		}
 
 	}
