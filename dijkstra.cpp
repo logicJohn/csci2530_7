@@ -174,7 +174,7 @@ int main(int argc, char* argv[])
 	g = readGraph();
 	int start, finish;
 	scanf("%i %i", &start, &finish);
-	printf("%i \n", finish);
+	printf("%i \n", start);
 	printGraph(g);
 	findDijkstra( g, start, finish);
 	showPath(g, finish);
@@ -288,6 +288,7 @@ void propergateSignal( Graph& g, int x, PriorityQueue& q)
 
 void processEvent( Graph& g, PriorityQueue& q, Event e )
 {
+	printf( "Arrival %.2lf, sender %d, receiver %d \n", e.times, e.sender, e.receiver );
 
 	if( g.arrayV[e.receiver].t < 0  )
 	{
@@ -314,12 +315,10 @@ void findDijkstra( Graph& g, int start, int finish)
 	PriorityQueue q;
 	sendSignal( 0, start, 0, q );
 	ItemType it;
-	printf( "Arrival %.2lf, sender %d, receiver %d \n", it->times, it->sender, it->receiver );
 	PriorityType pt;
 	while( g.arrayV[finish].f == -1 )
 	{
 		remove(q, it, pt);
-		printf( "Arrival %.2lf, sender %d, receiver %d \n", it->times, it->sender, it->receiver );
 		processEvent( g, q, *it);
 	}
 	deletePriorityQueue(q);
