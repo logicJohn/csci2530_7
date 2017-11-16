@@ -293,7 +293,7 @@ void processEvent( Graph& g, PriorityQueue& q, Event e )
 		if(traceEnable == 1)
 		{
 			printf( "Event Processed \n" );
-			printf( "Arrival %d, sender %d, receiver %d \n", e.times, e.receiver, e.sender ); 
+			printf( "Arrival %d, sender %d, receiver %d \n", e.times, e.sender, e.receiver ); 
 		}
 		
 	}
