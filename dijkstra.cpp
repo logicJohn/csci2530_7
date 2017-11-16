@@ -238,7 +238,7 @@ void printEdge( Edge* v )
 	{
 		if( temp->u < temp->v || traceEnable )
 		{
-			printf("(%d,%d) weight %lf\n",temp->u,temp->v,temp->w);
+			printf("(%d,%d) weight %.3lf\n",temp->u,temp->v,temp->w);
 		}
 	temp = temp->next;
 	}
