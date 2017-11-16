@@ -6,7 +6,7 @@
 
 /*
 This program will prototype the structures and functions
-neccsarry for the creation and management of a priority 
+neccsarry for the creation and management of a priority
 queue.
 
 A priority queue in this case will be a list of items
@@ -23,7 +23,7 @@ For example: (item, weight/priority) => (ItemType, PriorityType)
 and items in a priority queue will be listed as such, with no
 regards to ItemType
 
-[(1,1) (a,2) (0,3) (hello,4) (world,4)]  
+[(1,1) (a,2) (0,3) (hello,4) (world,4)]
 */
 
 
@@ -45,7 +45,7 @@ typedef void (*PriorityPrinter)(PriorityType);
 /*
 PQCell will be used as a node of the priority queue,
 The data types of Itemtype and Prioritytype will be
-decided in pqueue.h however will remain constant 
+decided in pqueue.h however will remain constant
 through out the program
 */
 struct PQCell;
@@ -55,7 +55,7 @@ This structure contains the leader of the priority queue
 */
 struct PriorityQueue{
 	PQCell* head;
-			
+
 	PriorityQueue()
 	{
 		head = NULL;
@@ -68,7 +68,7 @@ Function returns true if q is an empty priority queue
 bool isEmpty(const PriorityQueue& q);
 
 /*
-funtion adds a an item x to Priority Queue q, in position p  
+funtion adds a an item x to Priority Queue q, in position p
 */
 void insert(PriorityQueue& q, ItemType x, PriorityType p);
 
@@ -79,8 +79,8 @@ Item x, and priority p as out paramters of ItemType& x, PriorityType& p
 void remove(PriorityQueue& q, ItemType& x, PriorityType& p);
 
 /*
-This will print each of the items in the priority queue q from 
-first to last pi and pp will be used as printing functions for 
+This will print each of the items in the priority queue q from
+first to last pi and pp will be used as printing functions for
 the ItemType and PriorityQueue
 */
 void printPriorityQueue(const PriorityQueue& q, ItemPrinter pi, PriorityPrinter pp);
