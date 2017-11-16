@@ -306,7 +306,7 @@ void findDijkstra( Graph& g, int start, int finish)
 {
 	PriorityQueue q;
 	printf("start %d \n", start);
-	sendSignal( start, start, 0, q );
+	sendSignal( 0, start, 0, q );
 	ItemType it;
 	PriorityType pt;
 	while( g.arrayV[finish].f == -1 )
