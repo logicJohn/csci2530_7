@@ -187,7 +187,7 @@ Graph readGraph()
 	scanf("%i ", &a );
 	while( a > 0 )
 	{
-		scanf("%i %lf ", &b, &c );
+		scanf("%i %i ", &b, &c );
 		insertEdge( temp , a, b, c );
 		insertEdge( temp , b, a, c );
 		temp.numE++;
@@ -306,16 +306,14 @@ void findDijkstra( Graph& g, int start, int finish)
 {
 	PriorityQueue q;
 	printf("start %d \n", start);
-	sendSignal( start, 0, 0, q );
+	sendSignal( start, start, 0, q );
 	ItemType it;
 	PriorityType pt;
 	while( g.arrayV[finish].f == -1 )
 	{
-		printf("280 you are here 2 \n");
 		remove(q, it, pt); 
 		processEvent( g, q, *it);
 	}
-	printf("284 you are here 3 \n");
 	deletePriorityQueue(q);
 }
 
