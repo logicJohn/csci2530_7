@@ -163,7 +163,7 @@ int main(int argc, char* argv[])
 			return 1;
 		}
 	}
-	Graph g(0);
+	Graph g(-1);
 	g = readGraph();
 	int start, finish;
 	scanf("%i %i", &start, &finish);
