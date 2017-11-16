@@ -100,22 +100,24 @@ struct Graph{
 
 
 /*
-Records the input of the users graph
+Records the input of the users graph then returns the graph
 */
 Graph readGraph();
 
 /*
-addes an edge 
+addes an edge to graph v, where a is the first vertex, b
+is the second vertex, and c is the weight to the edge of
+both vertices
 */
 void insertEdge(Graph& v, int a, int b, double c );
 
 /*
-prints graph
+prints graph g
 */
 void printGraph(Graph& g );
 
 /*
-prints edge
+prints all edges that v points to
 */
 void printEdge(Edge* v );
 
@@ -187,7 +189,7 @@ Graph readGraph()
 	scanf("%i ", &a );
 	while( a > 0 )
 	{
-		scanf("%i %i ", &b, &c );
+		scanf("%i %lf ", &b, &c );
 		insertEdge( temp , a, b, c );
 		insertEdge( temp , b, a, c );
 		temp.numE++;
@@ -236,7 +238,7 @@ void printEdge( Edge* v )
 	{
 		if( temp->u < temp->v || traceEnable )
 		{
-			printf("(%d,%d) weight %d\n",temp->u,temp->v,temp->w);
+			printf("(%d,%d) weight %lf\n",temp->u,temp->v,temp->w);
 		}
 	temp = temp->next;
 	}
@@ -305,7 +307,6 @@ void processEvent( Graph& g, PriorityQueue& q, Event e )
 void findDijkstra( Graph& g, int start, int finish)
 {
 	PriorityQueue q;
-	printf("start %d \n", start);
 	sendSignal( 0, start, 0, q );
 	ItemType it;
 	PriorityType pt;
