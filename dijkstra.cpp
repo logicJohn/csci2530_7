@@ -147,6 +147,11 @@ prints the graph g from starting point to the finish point d
 */
 void showPath(Graph g, int d);
 
+/*
+Goes through each instal
+*/
+void processEvent( Graph& g, PriorityQueue& q, Event e );
+
 //main function, option -t enables trace
 int main(int argc, char* argv[])
 {
@@ -306,10 +311,12 @@ void findDijkstra( Graph& g, int start, int finish)
 	PriorityQueue q;
 	sendSignal( 0, start, 0, q );
 	ItemType it;
+	printf( "Arrival %.2lf, sender %d, receiver %d \n", it->times, it->sender, it->receiver );
 	PriorityType pt;
 	while( g.arrayV[finish].f == -1 )
 	{
 		remove(q, it, pt);
+		printf( "Arrival %.2lf, sender %d, receiver %d \n", it->times, it->sender, it->receiver );
 		processEvent( g, q, *it);
 	}
 	deletePriorityQueue(q);
