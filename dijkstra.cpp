@@ -20,7 +20,7 @@ A graph is a set of vertices contected by edges.
 
 using namespace std;
 
-int traceEnable = 0;
+int traceEnable = 1;
 
 /*
 
@@ -223,12 +223,12 @@ void sendSignal (int u, int v, int t, PriorityQueue& q)
 {
 	ItemType temp = new Event(u, v, t); 
 	insert( q, temp, t );
-	delete temp;
-	
 	if (traceEnable == 1)
 	{
-		printf( "t, u, v");
+		printf( "Signal Sent \n");
+		printf( "Arrival %d, Sender %d, Receiver %d", temp->times, temp->sender, temp->receiver);
 	}
+	delete temp;
 }
 
 //draw this out
@@ -239,7 +239,12 @@ void propergateSignal( Graph& g, int x, PriorityQueue& q)
 	{
 		if( g.arrayV[temp->v].t == -1 )
 		{
+	
 			sendSignal( temp->v, temp->u, g.arrayV[x].t+temp->w, q);
+			if(traceEnable == 1)
+			{
+				
+			}
 		}
 		temp = temp -> next;
 	}
@@ -248,19 +253,19 @@ void propergateSignal( Graph& g, int x, PriorityQueue& q)
 void processEvent( Graph& g, PriorityQueue& q, Event e )
 {
 	
-	if( g.arrayV[e.reciever].t < 0  )
+	if( g.arrayV[e.receiver].t < 0  )
 	{
 		
-		g.arrayV[e.reciever].t = e.times;
-		g.arrayV[e.reciever].f = e.sender;
+		g.arrayV[e.receiver].t = e.times;
+		g.arrayV[e.receiver].f = e.sender;
 		//ItemType temp = &e;
 		//insert( q, temp, e.times + g.arrayV[e.sender].t);
 		
-		propergateSignal( g, e.reciever , q);
+		propergateSignal( g, e.receiver , q);
 		if(traceEnable == 1)
 		{
-			printf( "event porccessed" );
-			printf( "the new vetwex is" );
+			printf( "Event Processed \n" );
+			printf( "Arrival %d, sender %d, receiver %d", e.times, e.receiver, e.sender ); 
 		}
 		
 	}
@@ -272,15 +277,14 @@ void findDijkstra( Graph& g, int start, int finish)
 	sendSignal( start, 0, 0, q );
 	ItemType it;
 	PriorityType pt;
-	printf("you are here 1 \n");
-	printf(" finish %d " , finish);
+	printf("277 finish %d " , finish);
 	while( g.arrayV[finish].f == -1 )
 	{
-		printf("you are here 2 \n");
+		printf("280 you are here 2 \n");
 		remove(q, it, pt); 
 		processEvent( g, q, *it);
 	}
-	printf("you are here 3 \n");
+	printf("284 you are here 3 \n");
 	deletePriorityQueue(q);
 }
 

@@ -16,13 +16,13 @@
 struct Event{
 	Event* next;
 	int sender;
-	int reciever;
+	int receiver;
 	double times;
 	Event(int u, int v, int t)
 	{
 		next = NULL;
 		sender = u;
-		reciever = v;
+		receiver = v;
 		times = t;
 		
 	}	

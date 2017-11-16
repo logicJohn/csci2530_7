@@ -16,7 +16,7 @@ echo 3 5 15
 echo 0
 
 echo 1 4
-) | C:\Users\johnn\Documents\GitHub\csci2530_7\helloWorld.exe
+) | T:\github\test\csci2530_7\helloWorld
 
 
 pause
