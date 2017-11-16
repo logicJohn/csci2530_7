@@ -43,13 +43,13 @@ void insertCell(PQCell*& L, ItemType x, PriorityType p);
 
 
 bool isEmpty(const PriorityQueue& q)
- {
-	 if( q.head == NULL )
-	 {
-		 return true;
-	 }
-	 return false;
- }
+{
+	if( q.head == NULL )
+	{
+		return true;
+	}
+	return false;
+}
 
 void insert(PriorityQueue& q, ItemType x, PriorityType p)
 {
@@ -61,26 +61,22 @@ void insertCell(PQCell*& L, ItemType x, PriorityType p)
 
 	if( !L )
 	{
-
 		PQCell* temp = new PQCell( x, p);
 		L = temp;
 	}
 	else if( p <= L->pri)
 	{
-
 		PQCell* temp = new PQCell( x, p);
 		temp->next = L;
 		L = temp;
 	}
 	else if( L->next == NULL )
 	{
-
 		PQCell* temp = new PQCell( x, p);
 		L->next->next = temp;
 	}
 	else
 	{
-
 		insertCell(L->next, x, p);
 	}
 
@@ -95,7 +91,6 @@ void printPriorityQueue(const PriorityQueue& q, ItemPrinter pi, PriorityPrinter 
 
 	while( temp )
 	{
-
 		pi(temp->item);
 		printf("\n");
 		pp(temp->pri);
@@ -107,13 +102,11 @@ void printPriorityQueue(const PriorityQueue& q, ItemPrinter pi, PriorityPrinter 
 
 void remove(PriorityQueue& q, ItemType& x, PriorityType& p)
 {
-
 	PQCell* temp = q.head;
 	q.head = temp->next;
 	x = temp->item;
 	p = temp->pri;
 	delete temp;
-
 }
 
 
