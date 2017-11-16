@@ -6,7 +6,7 @@
 
 /*
 This program defines the prototypes in pqueue.h
-While also defining 
+While also defining
 */
 
 
@@ -19,7 +19,7 @@ using namespace std;
 /*
 PQCell will be used as a node of the priority queue,
 The data types of Itemtype and Priority type will be
-decided in pqueue.h however will remain constant 
+decided in pqueue.h however will remain constant
 through out the program
 
 The constructor will initiate the first PQCell with
@@ -30,7 +30,7 @@ struct PQCell{
 	PQCell* next;
 	PriorityType pri;
 	ItemType	item;
-	
+
 	PQCell( ItemType x, PriorityType p)
 	{
 		pri=p;
@@ -58,62 +58,62 @@ void insert(PriorityQueue& q, ItemType x, PriorityType p)
 
 void insertCell(PQCell*& L, ItemType x, PriorityType p)
 {
-	
+
 	if( !L )
-	{	
-		
+	{
+
 		PQCell* temp = new PQCell( x, p);
 		L = temp;
 	}
 	else if( p <= L->pri)
-	{	
-		
+	{
+
 		PQCell* temp = new PQCell( x, p);
 		temp->next = L;
 		L = temp;
 	}
 	else if( L->next == NULL )
-	{	
-		
+	{
+
 		PQCell* temp = new PQCell( x, p);
 		L->next->next = temp;
 	}
-	else 
+	else
 	{
-		
+
 		insertCell(L->next, x, p);
 	}
-	
+
 }
 
 void printPriorityQueue(const PriorityQueue& q, ItemPrinter pi, PriorityPrinter pp)
 {
-	//pi(x); //item x 
+	//pi(x); //item x
 	//pp(y); //priority y
-	
+
 	PQCell* temp = q.head;
-	
+
 	while( temp )
 	{
-		
+
 		pi(temp->item);
 		printf("\n");
 		pp(temp->pri);
 		printf("\n \n");
 		temp=temp->next;
 	}
-	
+
 }
 
 void remove(PriorityQueue& q, ItemType& x, PriorityType& p)
 {
-	
+
 	PQCell* temp = q.head;
 	q.head = temp->next;
 	x = temp->item;
 	p = temp->pri;
 	delete temp;
-	
+
 }
 
 
