@@ -6,10 +6,23 @@
 
 /*
 This program takes reads a weighted graph from the user as 
-well as a start and finish point on the weighted graph 
+well as a start and finish point on the weighted graph then
+proceeds to print the faster path on the graph 
 
 Definitions:
+
+A vertex is a single point that will be labeled by an integer.
+
+An Edge is a road connecting two vertex.
+
 A graph is a set of vertices contected by edges.
+
+A weighted Graph is a graph where each edge contains
+	a value to indicate the distance from one vertex
+	to another.
+	
+A Path is a set of instructions used to navigate from 
+	vertex to vertex using the edges as roads.
 */
 
 #include <cstdio>
@@ -23,8 +36,10 @@ using namespace std;
 int traceEnable = 1;
 
 /*
-
-
+This edge contains the two integers that it connects
+labeled as u and v as well as its weight as a double.
+It uses the pointer next to point to the next edge
+on vertex u.
 */
 struct Edge{
 	Edge* next;
@@ -42,8 +57,11 @@ struct Edge{
 };
 
 /*
-
-
+Vertex conatains a pointer head that points to 
+the list of Edges that are connected to this 
+vertex.  An integer t to indicate when a signal
+arrives at this vertex and an integer f to indicate
+where the signal came from
 */
 struct Vertex{
 	Edge* head;
@@ -58,8 +76,10 @@ struct Vertex{
 };
 
 /*
-
-
+Graph contains two integers, the first numV which shows
+the total number of verties in the graph, while numE 
+records the total number of edges.  the pointer arrayV
+leads to a list of all the vertices in the Graph
 */
 struct Graph{
 	int numV; //num of Verticies
@@ -80,32 +100,27 @@ struct Graph{
 
 
 /*
-
-
+Records the input of the users graph
 */
 Graph readGraph();
 
 /*
-
-
+addes an edge 
 */
 void insertEdge(Graph& v, int a, int b, double c );
 
 /*
-
-
+prints graph
 */
 void printGraph(Graph& g );
 
 /*
-
-
+prints edge
 */
 void printEdge(Edge* v );
 
 /*
-
-
+sends singal
 */
 void sendSignal (int u, int v, int t, PriorityQueue& q);
 
@@ -161,6 +176,8 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
+
+
 Graph readGraph()
 {
 	int a, b;
@@ -179,6 +196,8 @@ Graph readGraph()
 	return temp;
 }
 
+
+
 void insertEdge( Graph& g, int a, int b, double c )
 {
 	if(g.arrayV[a].head == NULL)
@@ -196,6 +215,8 @@ void insertEdge( Graph& g, int a, int b, double c )
 	}
 }
 
+
+
 void printGraph( Graph& g )
 {
 	printf("There are %d vertices and %d edges. \n", g.numV, g.numE);
@@ -205,6 +226,8 @@ void printGraph( Graph& g )
 		printEdge(g.arrayV[i].head);
 	}
 }
+
+
 
 void printEdge( Edge* v )
 {
@@ -219,6 +242,8 @@ void printEdge( Edge* v )
 	}
 }
 
+
+
 void sendSignal (int u, int v, int t, PriorityQueue& q)
 {
 	ItemType temp = new Event(u, v, t); 
@@ -226,12 +251,13 @@ void sendSignal (int u, int v, int t, PriorityQueue& q)
 	if (traceEnable == 1)
 	{
 		printf( "Signal Sent \n");
-		printf( "Arrival %d, Sender %d, Receiver %d", temp->times, temp->sender, temp->receiver);
+		printf( "Arrival %d, Sender %d, Receiver %d \n", temp->times, temp->sender, temp->receiver);
 	}
 	delete temp;
 }
 
-//draw this out
+
+
 void propergateSignal( Graph& g, int x, PriorityQueue& q)
 {
 	Edge* temp = g.arrayV[x].head;
@@ -250,6 +276,8 @@ void propergateSignal( Graph& g, int x, PriorityQueue& q)
 	}
 }
 
+
+
 void processEvent( Graph& g, PriorityQueue& q, Event e )
 {
 	
@@ -265,19 +293,21 @@ void processEvent( Graph& g, PriorityQueue& q, Event e )
 		if(traceEnable == 1)
 		{
 			printf( "Event Processed \n" );
-			printf( "Arrival %d, sender %d, receiver %d", e.times, e.receiver, e.sender ); 
+			printf( "Arrival %d, sender %d, receiver %d \n", e.times, e.receiver, e.sender ); 
 		}
 		
 	}
 }
 
+
+
 void findDijkstra( Graph& g, int start, int finish)
 {
 	PriorityQueue q;
+	printf("start %d \n", start);
 	sendSignal( start, 0, 0, q );
 	ItemType it;
 	PriorityType pt;
-	printf("277 finish %d " , finish);
 	while( g.arrayV[finish].f == -1 )
 	{
 		printf("280 you are here 2 \n");
@@ -288,6 +318,8 @@ void findDijkstra( Graph& g, int start, int finish)
 	deletePriorityQueue(q);
 }
 
+
+
 void deletePriorityQueue(PriorityQueue& q)
 {
 	ItemType it;
@@ -297,6 +329,8 @@ void deletePriorityQueue(PriorityQueue& q)
 		remove( q, it, pt);		
 	}
 }
+
+
 
 void showPath(Graph g, int d)
 {
