@@ -112,7 +112,10 @@ both vertices
 void insertEdge(Graph& v, int a, int b, double c );
 
 /*
-prints graph g
+prints graph g, if trace is enabled recieve a more complete print
+traceEnabled == False
+
+traceEnabled == True
 */
 void printGraph(Graph& g );
 
@@ -122,12 +125,13 @@ prints all edges that v points to
 void printEdge(Edge* v );
 
 /*
-sends singal
+sends singal to the event queue q using u and v as vertexes
+and t as the time or weight of the signal 
 */
-void sendSignal (int u, int v, int t, PriorityQueue& q);
+void sendSignal (int u, int v, double t, PriorityQueue& q);
 
 /*
-
+Takes the send a signal to every vertex v 
 
 */
 void propergateSignal( Graph& g, int x, PriorityQueue& q);
@@ -246,10 +250,11 @@ void printEdge( Edge* v )
 
 
 
-void sendSignal (int u, int v, int t, PriorityQueue& q)
+void sendSignal (int u, int v, double t, PriorityQueue& q)
 {
 	ItemType temp = new Event(u, v, t); 
-	insert( q, temp, t );
+	PriorityType y = t;
+	insert( q, temp, y );
 	if (traceEnable == 1)
 	{
 		printf( "Signal Sent \n");

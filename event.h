@@ -18,7 +18,7 @@ struct Event{
 	int sender;
 	int receiver;
 	double times;
-	Event(int u, int v, int t)
+	Event(int u, int v, double t)
 	{
 		next = NULL;
 		sender = u;
