@@ -125,19 +125,25 @@ and t as the time or weight of the signal
 void sendSignal (int u, int v, double t, PriorityQueue& q);
 
 /*
-Takes the send a signal to every vertex v 
+Takes the send a signal to every vertex x searching through 
+graph g for each vertex and then adding each that hasnt been
+touched to event queue q
 */
 void propergateSignal( Graph& g, int x, PriorityQueue& q);
 
 /*
+This finds the smallest path in graph g from vertex x to
+vertex y
 */
 void findDijkstra( Graph& g, int x, int y);
 
 /*
+Destroys the event queue q
 */
 void deletePriorityQueue(PriorityQueue& q);
 
 /*
+prints the graph g from starting point to the finish point d
 */
 void showPath(Graph g, int d);
 
