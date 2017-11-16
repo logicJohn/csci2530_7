@@ -5,9 +5,9 @@
 // Tab stops:  8
 
 /*
-This program takes reads a weighted graph from the user as 
+This program takes reads a weighted graph from the user as
 well as a start and finish point on the weighted graph then
-proceeds to print the faster path on the graph 
+proceeds to print the faster path on the graph
 
 Definitions:
 
@@ -20,8 +20,8 @@ A graph is a set of vertices contected by edges.
 A weighted Graph is a graph where each edge contains
 	a value to indicate the distance from one vertex
 	to another.
-	
-A Path is a set of instructions used to navigate from 
+
+A Path is a set of instructions used to navigate from
 	vertex to vertex using the edges as roads.
 */
 
@@ -57,8 +57,8 @@ struct Edge{
 };
 
 /*
-Vertex conatains a pointer head that points to 
-the list of Edges that are connected to this 
+Vertex conatains a pointer head that points to
+the list of Edges that are connected to this
 vertex.  An integer t to indicate when a signal
 arrives at this vertex and an integer f to indicate
 where the signal came from
@@ -77,7 +77,7 @@ struct Vertex{
 
 /*
 Graph contains two integers, the first numV which shows
-the total number of verties in the graph, while numE 
+the total number of verties in the graph, while numE
 records the total number of edges.  the pointer arrayV
 leads to a list of all the vertices in the Graph
 */
@@ -95,7 +95,7 @@ struct Graph{
 			arrayV[i].head = NULL;
 		}
 	}
-	
+
 };
 
 
@@ -170,11 +170,11 @@ int main(int argc, char* argv[])
 	int start, finish;
 	scanf("%i %i", &start, &finish);
 	printf("%i \n", finish);
-	printGraph(g);	
+	printGraph(g);
 	findDijkstra( g, start, finish);
 	showPath(g, finish);
 
-		
+
 	return 0;
 }
 
@@ -248,7 +248,7 @@ void printEdge( Edge* v )
 
 void sendSignal (int u, int v, int t, PriorityQueue& q)
 {
-	ItemType temp = new Event(u, v, t); 
+	ItemType temp = new Event(u, v, t);
 	insert( q, temp, t );
 	if (traceEnable == 1)
 	{
@@ -268,11 +268,11 @@ void propergateSignal( Graph& g, int x, PriorityQueue& q)
 	{
 		if( g.arrayV[temp->v].t == -1 )
 		{
-	
+
 			sendSignal( temp->v, temp->u, g.arrayV[x].t+temp->w, q);
 			if(traceEnable == 1)
 			{
-				
+
 			}
 		}
 		temp = temp -> next;
@@ -283,22 +283,22 @@ void propergateSignal( Graph& g, int x, PriorityQueue& q)
 
 void processEvent( Graph& g, PriorityQueue& q, Event e )
 {
-	
+
 	if( g.arrayV[e.receiver].t < 0  )
 	{
-		
+
 		g.arrayV[e.receiver].t = e.times;
 		g.arrayV[e.receiver].f = e.sender;
 		//ItemType temp = &e;
 		//insert( q, temp, e.times + g.arrayV[e.sender].t);
-		
+
 		propergateSignal( g, e.receiver , q);
 		if(traceEnable == 1)
 		{
 			printf( "Event Processed \n" );
-			printf( "Arrival %lf, sender %d, receiver %d \n", e.times, e.sender, e.receiver ); 
+			printf( "Arrival %lf, sender %d, receiver %d \n", e.times, e.sender, e.receiver );
 		}
-		
+
 	}
 }
 
@@ -312,7 +312,7 @@ void findDijkstra( Graph& g, int start, int finish)
 	PriorityType pt;
 	while( g.arrayV[finish].f == -1 )
 	{
-		remove(q, it, pt); 
+		remove(q, it, pt);
 		processEvent( g, q, *it);
 	}
 	deletePriorityQueue(q);
@@ -326,7 +326,7 @@ void deletePriorityQueue(PriorityQueue& q)
 	PriorityType pt;
 	while( !isEmpty(q) )
 	{
-		remove( q, it, pt);		
+		remove( q, it, pt);
 	}
 }
 
