@@ -252,6 +252,7 @@ void sendSignal (int u, int v, int t, PriorityQueue& q)
 	{
 		printf( "Signal Sent \n");
 		printf( "Arrival %d, Sender %d, Receiver %d \n", temp->times, temp->sender, temp->receiver);
+		printf( "Arrival %d, Sender %d, Receiver %d \n", t, u, v);
 	}
 	delete temp;
 }
