@@ -152,7 +152,7 @@ int main(int argc, char* argv[])
 {
 	if( argc > 1 )
 	{
-		if(argv[1] == "t")
+		if(argv[1] == "-t")
 		{
 			traceEnable = 1;
 		}
